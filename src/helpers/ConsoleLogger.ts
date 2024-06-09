@@ -1,19 +1,17 @@
-// implemente um logger utilizando ILogger.ts
-
 import { ILogger } from "../interfaces/ILogger";
 
-export class ConsoleLoggerImpl implements ILogger {
-	private static instance: ConsoleLoggerImpl;
+export class ConsoleLogger implements ILogger {
+	private static instance: ConsoleLogger;
 
 	private constructor() {
 		// private constructor to prevent instantiation from outside the class
 	}
 
-	public static getInstance(): ConsoleLoggerImpl {
-		if (!ConsoleLoggerImpl.instance) {
-			ConsoleLoggerImpl.instance = new ConsoleLoggerImpl();
+	public static getInstance(): ConsoleLogger {
+		if (!ConsoleLogger.instance) {
+			ConsoleLogger.instance = new ConsoleLogger();
 		}
-		return ConsoleLoggerImpl.instance;
+		return ConsoleLogger.instance;
 	}
 
 	public debug(message: string): void {

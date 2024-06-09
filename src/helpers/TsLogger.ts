@@ -21,8 +21,7 @@ export class TsLogger implements Logger {
 
 	debug(message: string): void {
 		console.debug(
-			`[${this.name}] ${new Date().toLocaleString()} [DEBUG] ${message}`,
-			{}
+			`[${this.name}] ${new Date().toLocaleString()} [DEBUG] ${message}`
 		);
 	}
 

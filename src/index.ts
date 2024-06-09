@@ -1,46 +1,39 @@
-import { TsLogger } from "./lib/TsLoggerImpl";
-import { ConsoleLoggerImpl } from "./lib/ConsoleLoggerImpl";
+import { TsLogger } from "./helpers/TsLogger";
+import { ConsoleLogger } from "./helpers/ConsoleLogger";
 import { TaskStatusEnum } from "./enums/TaskStatusEnum";
-import { Task } from "./interfaces/Task";
-import { TaskServiceImpl } from "./services/TaskServiceImpl";
+import { TaskService } from "./services/TaskService";
+import { Task } from "./models/TaskModel";
+import { RegisteredUser } from "./models/RegistredUserModel";
 
-const taskService = new TaskServiceImpl();
 const tsLogger: TsLogger = new TsLogger("handleTaskOperations");
-const consoleLogger: ConsoleLoggerImpl = ConsoleLoggerImpl.getInstance();
+const consoleLogger: ConsoleLogger = ConsoleLogger.getInstance();
 
 handleTaskOperations();
 
 function handleTaskOperations() {
+	const taskService = new TaskService();
 	consoleLogger.info("Starting task operations");
 	try {
-		const user = {
-			id: 1,
-			name: "Mateus Lodi"
-		};
+		const user: RegisteredUser = new RegisteredUser(
+			"Mateus Lodi",
+			"test@abc.com"
+		);
 
-		// Create tasks
 		const initialTask: Task[] = [
-			{
-				id: 1,
-				title: "My Task",
-				description: "This is a task",
-				status: TaskStatusEnum.PENDING,
+			new Task(
+				"This is task 1",
+				"This is task 1",
+				TaskStatusEnum.IN_PROGRESS,
 				user
-			},
-			{
-				id: 2,
-				title: "My Task",
-				description: "This is a task",
-				status: TaskStatusEnum.PENDING,
-				user
-			}
+			),
+			new Task("This is task 2", "This is task 2", TaskStatusEnum.PENDING, user)
 		];
 
 		const resultCreationTasks = taskService.createTasks(initialTask);
 		tsLogger.debug(`Created task: ${JSON.stringify(resultCreationTasks)}`);
 
 		const taskById = taskService.getTaskById(initialTask[0].id);
-		tsLogger.debug(`Task: ${JSON.stringify(taskById)}`);
+		tsLogger.debug(`getTaskById Result: ${JSON.stringify(taskById)}`);
 
 		const resultUpdateTask = taskService.updateTask({
 			...initialTask[0],
@@ -50,8 +43,8 @@ function handleTaskOperations() {
 		});
 		tsLogger.debug(`Updated task: ${JSON.stringify(resultUpdateTask)}`);
 
-		taskService.deleteTask(resultCreationTasks[0].id);
-		tsLogger.debug(`Deleted task with ID: ${resultCreationTasks[0].id}`);
+		taskService.deleteTaskById(initialTask[0].id);
+		tsLogger.debug(`Deleted task with ID: ${initialTask[0].id}`);
 
 		const resultTaskList = taskService.getTaskList();
 		tsLogger.debug(`Task list: ${JSON.stringify(resultTaskList)}`);

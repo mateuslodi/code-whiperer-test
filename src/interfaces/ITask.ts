@@ -1,12 +1,12 @@
 import { TaskStatusEnum } from "../enums/TaskStatusEnum";
-import { User } from "./User";
+import { IUser } from "./IUser";
 
-export interface Task {
-	id: number;
-	user: User;
+export interface ITask {
+	id: string;
 	title: string;
 	description?: string;
 	status: TaskStatusEnum;
-	createdAt?: Date;
-	updatedAt?: Date;
+	user: IUser;
+	createdAt: Date;
+	updatedAt: Date;
 }

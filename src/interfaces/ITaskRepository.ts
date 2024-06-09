@@ -1,6 +1,6 @@
 import { Task } from "../models/TaskModel";
 
-export interface ITaskService {
+export interface ITaskRepository {
 	getTaskList(): Array<Task>;
 	getTaskById(id: string): Task | undefined;
 	createTasks(task: Task[]): Task[];

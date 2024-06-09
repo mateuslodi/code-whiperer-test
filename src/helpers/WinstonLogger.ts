@@ -1,4 +1,3 @@
-//logger winston
 import { createLogger, format, transports } from "winston";
 
 export class WinstonLogger {
